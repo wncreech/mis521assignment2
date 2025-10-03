@@ -1,0 +1,58 @@
+{
+  "Version": 1,
+  "Hash": "2TEm7NW0vHfXWNOCHWe+HXH4avmBXqAY/lPRt9cviEA=",
+  "Source": "Assignment2",
+  "BasePath": "_content/Assignment2",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "Assignment2\\wwwroot",
+      "Source": "Assignment2",
+      "ContentRoot": "C:\\Users\\wncre\\source\\repos\\Assignment2\\wwwroot\\",
+      "BasePath": "_content/Assignment2",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\wncre\\source\\repos\\Assignment2\\wwwroot\\index.html",
+      "SourceId": "Assignment2",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\wncre\\source\\repos\\Assignment2\\wwwroot\\",
+      "BasePath": "_content/Assignment2",
+      "RelativePath": "index.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\index.html"
+    },
+    {
+      "Identity": "C:\\Users\\wncre\\source\\repos\\Assignment2\\wwwroot\\README.md",
+      "SourceId": "Assignment2",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\wncre\\source\\repos\\Assignment2\\wwwroot\\",
+      "BasePath": "_content/Assignment2",
+      "RelativePath": "README.md",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\README.md"
+    }
+  ]
+}

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@microsoft/azsearch.js@0.0.21/dist/AzSearch.css" integrity="sha384-A4GRwkHIqaePcrwhXmW+Ie/Q1cPwV20Ma4G/dCn6CgIk91An1IAnpZ/RXRnTFHPB" crossorigin="anonymous">
+    <title>Creech's HomeFinder</title>
+    <style>
+        .searchResults__result h4 {
+            margin-top: 0px;
+            text-transform: uppercase;
+        }
+
+        .searchResults__result .resultDescription {
+            margin: 0.5em 0 0 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#facetPanel" aria-expanded="false"
+                            aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                    <div class="row">
+                        <div class="col-md-2 pagelabel">
+                            <a class="navbar-brand pagelabel" target="_blank" style="padding-top: 5px; padding-bottom: 5px;" onclick="changePicture()">Creech's HomeFinder</a>
+                        </div>
+                        <div id="searchBox" class="col-md-8 col-sm-8 col-xs-6"></div>
+                        <div id="navbar" class="navbar-collapse collapse">
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top:10px;">
+                        <button id="showTimeBtn" class="btn">Show Time</button>
+                        <div id="time" title="Current Time" style="display:none;"></div>
+                    </div>
+
+                </div>
+            </div>
+        </nav>
+        <div class="container-fluid">
+            <div class="row">
+                <div id="facetPanel" class="col-sm-3 col-md-3 sidebar collapse">
+                    <div id="clearFilters"></div>
+                    <ul class="nav nav-sidebar">
+                        <div class="panel panel-primary behclick-panel">
+
+                        <li>
+                            <div id="bedsFacet">
+                            </div>
+                        </li>
+                        <li>
+                            <div id="bathsFacet">
+                            </div>
+                        </li>
+                        <li>
+                            <div id="sqftFacet">
+                            </div>
+                        </li>
+                        <li>
+                            <div id="daysOnMarketFacet">
+                            </div>
+                        </li>
+                        <li>
+                            <div id="statusFacet">
+                            </div>
+                        </li>
+                        <li>
+                            <div id="typeFacet">
+                            </div>
+                        </li>
+                        <li>
+                            <div id="cityFacet">
+                            </div>
+                        </li>
+                        <li>
+                            <div id="regionFacet">
+                            </div>
+                        </li>
+                        <li>
+                            <div id="postCodeFacet">
+                            </div>
+                        </li>
+                        <li>
+                            <div id="priceFacet">
+                            </div>
+                        </li>
+                        <li>
+                            <div id="tagsFacet">
+                            </div>
+                        </li>
+                </div>
+                </ul>
+            </div>
+            <div class="col-sm-9 col-sm-offset-3 col-md-9 col-md-offset-3 results_section">
+                <div id="results" class="row placeholders">
+                </div>
+                <div id="pager" class="row">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap core JavaScript
+        ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" integrity="sha384-vIQIPaHJRqkO8xhnLxSZ0rHF6LyiWXbLF3grsa9pv9yDFyOPGrE1teHOuRNMJoZs" crossorigin="anonymous">
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js" integrity="sha384-4D3G3GikQs6hLlLZGdz5wLFzuqE9v4yVGAcOH86y23JqBDPzj9viv0EqyfIa6YUL" crossorigin="anonymous"></script>
+</body>
+<!-- Dependencies -->
+<script src="https://cdn.jsdelivr.net/react/15.5.0/react.min.js" integrity="sha384-unua6Gv4M/M70BdLhkLiN8hgAL+jKt8Iiy6SFD9S0ywoRy+5zHVBuztpyEn0tAus" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/react/15.5.0/react-dom.min.js" integrity="sha384-mcKbn9HhTY6F3IhItyNmc8stlOpwMfyzy66GsAGSsjMpjAjvEWuE/bwDiMTR9P8f" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/redux/3.6.0/redux.min.js" integrity="sha384-vG6fds20q0bT+1dDKZMlWnQZM1Aic6HaVjyELCdGUDBZQpiKM3Zfm+R6DTUfUlB/" crossorigin="anonymous"></script>
+<!-- Main -->
+<script src="https://cdn.jsdelivr.net/npm/@microsoft/azsearch.js@0.0.21/dist/AzSearch.bundle.js" integrity="sha384-L81tXpv1V/sogv+CuyItOpknRBiTHFDZlI/XQw1RY23xGj7bq64cD9B+U1HU5Dp2" crossorigin="anonymous"></script>
+<script>
+
+    const serviceName = "creechsp25mis521";
+    const dnsSuffix = "search.windows.net";
+    const indexName = "realestate-us-sample-index";
+    const apiKey = "AelPktXcKj00Tk4Os4KKl1HfS4XYUBJBslKGVt0LwIAzSeC6Ygnd";
+    const apiVersion = "2024-11-01-preview"; // or a later version
+
+    // WARNING
+    // For demonstration purposes only, do not use in a production environment. For simplicity, this is a single HTML page that has the query key to the search service.
+    // CORS (*) must be enabled in the index before using the demo app. API key authentication must be enabled in the search service.
+
+    // Initialize and connect to your search service
+    var automagic = new AzSearch.Automagic({ index:indexName, queryKey:apiKey, service:serviceName, dnsSuffix:dnsSuffix });
+    
+    const resultTemplate = `<div class="col-xs-12 col-sm-3 col-md-3 result_img" >
+            <img class="img-responsive result_img" src={{thumbnail}} alt="image not found" />
+        </div><div class="col-xs-12 col-sm-9 col-md-9"><h4>{{city}}</h4><div class="resultDescription">{{{description}}}</div></div>`;
+
+    // add a results view using the template defined above
+    automagic.addResults("results", { count: true }, resultTemplate);
+    
+    // Adds a pager control << 1 2 3 ... >>
+    automagic.addPager("pager");
+    
+    // Set some processors to format results for display
+    var suggestionsProcessor = function (results) {
+        return results.map(function (result) {
+            result.searchText = result["@search.text"];
+            return result;
+        });
+    };
+
+    automagic.store.setSuggestionsProcessor(suggestionsProcessor);
+
+    var suggestionsTemplate = `
+            <p> {{number}} {{street}} {{city}} {{region}} {{countryCode}} </p> {{{searchText}}}`;
+
+    // Add a search box that uses suggester "sg", grabbing some additional fields to display during suggestions. Use the template defined above
+    automagic.addSearchBox("searchBox",
+        {
+            highlightPreTag: "<b>",
+            highlightPostTag: "</b>",
+            suggesterName: "sg",
+            select: "number,street,city,region,countryCode"
+        },
+        "",
+        suggestionsTemplate);
+    
+       automagic.addRangeFacet("bedsFacet", "beds", "number", 0, 1000000);
+   automagic.addRangeFacet("bathsFacet", "baths", "number", 0, 1000000);
+   automagic.addRangeFacet("sqftFacet", "sqft", "number", 0, 1000000);
+   automagic.addRangeFacet("daysOnMarketFacet", "daysOnMarket", "number", 0, 1000000);
+   automagic.addCheckboxFacet("statusFacet", "status", "string");
+   automagic.addCheckboxFacet("typeFacet", "type", "string");
+   automagic.addCheckboxFacet("cityFacet", "city", "string");
+   automagic.addCheckboxFacet("regionFacet", "region", "string");
+   automagic.addCheckboxFacet("postCodeFacet", "postCode", "string");
+   automagic.addRangeFacet("priceFacet", "price", "number", 0, 1000000);
+   automagic.addCheckboxFacet("tagsFacet", "tags", "collection");
+
+
+    // Adds a button to clear any applied filters
+    automagic.addClearFiltersButton("clearFilters");
+
+
+    //wncreech code - background
+    const images = [
+        'https://images.unsplash.com/photo-1597211833712-5e41faa202ea?q=80&w=435&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'https://images.unsplash.com/photo-1624733416693-4b0790307660?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'https://images.unsplash.com/photo-1657771697768-2394d8b7c25a?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'https://assets.birminghamhomeandgarden.com/2021/10/tudor.jpg',
+        'https://plus.unsplash.com/premium_photo-1750235561224-5252ee4a37ef?q=80&w=871&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'https://images.unsplash.com/photo-1689714538928-323a9277e48e?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+
+    ];
+
+    let currentIndex = 0;
+
+    function changePicture() {
+        if (currentIndex == images.length - 1) currentIndex = 0;
+        else currentIndex++;
+        document.getElementById('facetPanel').style.backgroundImage = `url('${images[currentIndex]}')`;
+    }
+
+    //time function
+    $(document).ready(function () {
+        function getCurrentTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            return `${hours}:${minutes}`;
+        }
+
+        $('#showTimeBtn').click(function () {
+            const timeStr = getCurrentTime();
+            $('#time').text(timeStr).dialog({
+                title: "Current Time",
+                modal: true,
+                width: 200,
+                buttons: {
+                    "Close": function () {
+                        $(this).dialog("close");
+                    }
+                }
+            });
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById('facetPanel').style.backgroundImage = `url('${images[0]}')`;
+    });
+
+    //bonus - on any click
+    document.addEventListener('click', changePicture);
+
+</script>
+<style>
+    body {
+        font-family: 'Trebuchet MS', sans-serif;
+        background-color: #f5fffa;
+        color: #333;
+    }
+    .navbar {
+        background-color: #e6fff5; 
+        border: none;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+   .navbar .navbar-brand {
+            color: #4ac4a3 !important; /* soft mint text */
+            font-weight: bold;
+    }
+
+    .navbar .navbar-brand:hover {
+        color: #2fa084 !important;
+     }
+
+
+
+    #facetPanel {
+        
+    }
+
+        #facetPanel h3, #facetPanel h4 {
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+    button, .btn {
+        background-color: #2fa084; 
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 18px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+        button:hover, .btn:hover {
+            background-color: #4ac4a3;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }
+
+
+        button:active, .btn:active {
+            background-color: #3da88e;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transform: translateY(0);
+        }
+
+        #facetPanel {
+            background-size: cover; /* Make the image cover the entire panel */
+            background-position: center; /* Center the image */
+            background-repeat: no-repeat; /* Prevent tiling */
+            min-height: 100vh; /* Ensure it stretches to full height */
+        }
+ </style>
+</html>
